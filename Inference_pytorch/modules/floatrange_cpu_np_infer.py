@@ -8,7 +8,7 @@ import numpy as np
 class FConv2d(nn.Conv2d):
     def __init__(self, in_channels, out_channels, kernel_size, stride=1, padding=0, dilation=1, groups=1, bias=False, logger=None,
                 wl_input =8,wl_weight= 8,inference=0,onoffratio=10,cellBit=1,subArray=128,ADCprecision=5,
-                vari=0,t=0,v=0,detect=0,target=0,debug = 0, cuda=True, name = 'Fconv'):
+                vari=0,t=0,v=0,detect=0,target=0,debug = 0, cuda=False, name = 'Fconv'):
         super(FConv2d, self).__init__(in_channels, out_channels, kernel_size, stride, padding, dilation, groups, bias)
         self.logger = logger
         self.wl_weight = wl_weight

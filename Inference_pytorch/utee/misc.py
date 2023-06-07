@@ -186,12 +186,14 @@ def eval_model(model, ds, n_sample=None, ngpu=1, is_imagenet=False):
     if is_imagenet:
         model = ModelWrapper(model)
     model = model.eval()
-    model = torch.nn.DataParallel(model, device_ids=range(ngpu)).cuda()
+    if torch.cuda.is_available():
+        model = torch.nn.DataParallel(model, device_ids=range(ngpu)).cuda()
 
     n_sample = len(ds) if n_sample is None else n_sample
     for idx, (data, target) in enumerate(tqdm.tqdm(ds, total=n_sample)):
         n_passed += len(data)
-        data =  Variable(torch.FloatTensor(data)).cuda()
+        if torch.cuda.is_available():
+            data =  Variable(torch.FloatTensor(data)).cuda()
         indx_target = torch.LongTensor(target)
         output = model(data)
         bs = output.size(0)
